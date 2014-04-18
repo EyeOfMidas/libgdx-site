@@ -538,6 +538,11 @@ h1 span.creator{
     border:1px solid #555;
     box-shadow: 0 0 3px #aaa;
 }
+
+.custom-checkbox {
+	
+}
+
 /* Button Style */
 button.submit {
     background-color: #68b12f;
