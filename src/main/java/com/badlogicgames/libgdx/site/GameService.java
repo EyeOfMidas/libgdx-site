@@ -52,7 +52,11 @@ public class GameService {
 		if(dir == null) {
 			dir = "/opt/gamedb";
 		}
-		recaptchaPrivateKey = FileUtils.readFileToString(new File(dir, "recaptcha.key")).trim();
+		if ("disable".equals(System.getenv().get("captcha"))) {
+			recaptchaPrivateKey = null;
+		} else {
+			recaptchaPrivateKey = FileUtils.readFileToString(new File(dir, "recaptcha.key")).trim();
+		}
 		db = new FileGameDatabase(dir);
 	}
 	
@@ -121,6 +125,9 @@ public class GameService {
 	}
 	
 	private boolean checkCaptcha(String remoteIp, GameRequest request) {
+		if ("disable".equals(System.getenv().get("captcha"))) {
+			return true;
+		}
 		String privateKey = recaptchaPrivateKey;
 		String challenge = request.challenge;
 		String response = request.response;
